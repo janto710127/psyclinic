@@ -28,6 +28,30 @@
 
             <div class="card-body">
 
+                <form method="GET" action="{{ route('patients.index') }}" class="row g-2 mb-3">
+
+                    <div class="col-md-8">
+                        <input type="text"
+                            name="keyword"
+                            class="form-control"
+                            placeholder="Cari No RM / Nama / HP"
+                            value="{{ $keyword }}">
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">
+                            Cari
+                        </button>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="{{ route('patients.index') }}" class="btn btn-secondary w-100">
+                            Reset
+                        </a>
+                    </div>
+
+                </form>
+
                 <div class="table-responsive">
 
                     <table class="table table-bordered table-hover">
@@ -119,9 +143,12 @@
                         </tbody>
 
                     </table>
-
+ 
                 </div>
-
+               <div class="mt-3">
+                    {{ $patients->links() }}
+                </div>
+ 
             </div>
 
         </div>

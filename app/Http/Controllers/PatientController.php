@@ -7,17 +7,40 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-    public function index()
-    {
-        $patients = Patient::latest()->get();
-
-        return view('patients.index', compact('patients'));
-    }
+    // public function index()
+    // {
+    //     $patients = Patient::latest()->paginate(20);
+    //     return view('patients.index', compact('patients'));
+    // }
 
     public function create()
     {
-        return view('patients.create');
+         return view('patients.create');
     }
+
+    public function index(Request $request)
+        {
+            $keyword = $request->keyword;
+
+            $patients = Patient::query()
+
+                ->when($keyword, function ($query) use ($keyword) {
+
+                    $query->where('patient_number', 'like', "%{$keyword}%")
+                        ->orWhere('name', 'like', "%{$keyword}%")
+                        ->orWhere('phone', 'like', "%{$keyword}%");
+
+                })
+
+                ->latest()
+
+                ->paginate(20)
+
+                ->withQueryString();
+
+            return view('patients.index', compact('patients', 'keyword'));
+            
+        }
 
     public function store(Request $request)
 
@@ -50,9 +73,10 @@ class PatientController extends Controller
 
     public function show(Patient $patient)
         {
+            $patient->load('timelines');
+
             return view('patients.show', compact('patient'));
         }
-
     public function edit(Patient $patient)
     {
         return view('patients.edit', compact('patient'));

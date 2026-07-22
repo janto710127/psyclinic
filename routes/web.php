@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientTimelineController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,5 +21,15 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('patients', PatientController::class)
     ->middleware('auth');
+
+Route::get('/patients/{patient}/timelines/create', [
+    PatientTimelineController::class,
+    'create'
+])->name('patients.timelines.create');
+
+Route::post('/patients/{patient}/timelines', [
+    PatientTimelineController::class,
+    'store'
+])->name('patients.timelines.store');
 
 require __DIR__.'/auth.php';

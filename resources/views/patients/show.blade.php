@@ -67,6 +67,79 @@
                         </div>
                     </div>
 
+                    <hr>
+
+<div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+
+    <h4 class="mb-0">
+        Timeline Pasien
+    </h4>
+
+    <a href="{{ route('patients.timelines.create', $patient) }}"
+       class="btn btn-primary">
+
+        <i class="bi bi-plus-circle"></i>
+        Tambah Timeline
+
+    </a>
+
+</div>
+
+@if($patient->timelines->count())
+
+    <div class="list-group">
+
+        @foreach($patient->timelines->sortByDesc('occurred_at') as $timeline)
+
+            <div class="list-group-item">
+
+                <div class="d-flex justify-content-between">
+
+                    <h5 class="mb-1">
+                        {{ $timeline->title }}
+                    </h5>
+
+                    <small class="text-muted">
+
+                        {{ $timeline->occurred_at->format('d M Y H:i') }}
+
+                    </small>
+
+                </div>
+
+                <p class="mb-1">
+
+                    {{ $timeline->description ?? '-' }}
+
+                </p>
+
+                <small class="badge bg-secondary">
+
+                    {{ $timeline->type }}
+
+                </small>
+
+            </div>
+
+        @endforeach
+
+    </div>
+
+@else
+
+    <div class="alert alert-info">
+
+        Belum ada timeline pasien.
+
+    </div>
+
+@endif
+
+
+
+
+
+
                 </div>
 
             </div>
