@@ -20,7 +20,20 @@
                         class="btn btn-warning">
                             Edit Pasien
                         </a>
+                        <form action="{{ route('patients.destroy', $patient) }}"
+                                    method="POST"
+                                    class="d-inline"
+                                    onsubmit="return confirm('Yakin ingin mengarsipkan pasien ini?')">
 
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                            class="btn btn-danger">
+                                        Arsipkan
+                                    </button>
+
+                        </form>
                         <a href="{{ route('patients.index') }}"
                         class="btn btn-secondary">
                             Kembali

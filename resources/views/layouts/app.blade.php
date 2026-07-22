@@ -67,8 +67,16 @@
 
                     </a>
 
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="{{ route('patients.index') }}"
+                      class="list-group-item list-group-item-action">
                         Pasien
+                    </a>
+
+                    <a href="{{ route('patients.archived') }}"
+                        class="list-group-item list-group-item-action">
+
+                        Arsip Pasien
+
                     </a>
 
                     <a href="#" class="list-group-item list-group-item-action">

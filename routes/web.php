@@ -19,8 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('patients', PatientController::class)
-    ->middleware('auth');
+Route::get('/patients-archived', [PatientController::class, 'archived'])
+    ->name('patients.archived');
 
 Route::get('/patients/{patient}/timelines/create', [
     PatientTimelineController::class,
@@ -32,4 +32,14 @@ Route::post('/patients/{patient}/timelines', [
     'store'
 ])->name('patients.timelines.store');
 
+Route::patch(
+    '/patients/{id}/restore',
+    [PatientController::class, 'restore']
+)->name('patients.restore');
+
+Route::resource('patients', PatientController::class)
+    ->middleware('auth');
+
+
 require __DIR__.'/auth.php';
+
