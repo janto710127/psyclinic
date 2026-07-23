@@ -21,10 +21,7 @@
 
         <div class="container-fluid">
 
-            <a class="navbar-brand" href="{{ route('dashboard') }}">
-                PsyClinic
-            </a>
-
+ 
             <div class="d-flex align-items-center">
 
                 <span class="text-white me-3">
@@ -78,8 +75,13 @@
                         Arsip Pasien
 
                     </a>
+                    <a href="{{ route('psychologists.index') }}"
+                        class="list-group-item list-group-item-action">
 
-                    <a href="#" class="list-group-item list-group-item-action">
+                            Psikolog
+
+                    </a>
+                                <a href="#" class="list-group-item list-group-item-action">
                         Appointment
                     </a>
 

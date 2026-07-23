@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientTimelineController;
+use App\Http\Controllers\PsychologistController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,6 +39,18 @@ Route::patch(
 )->name('patients.restore');
 
 Route::resource('patients', PatientController::class)
+    ->middleware('auth');
+
+// Psikolog
+Route::get('/psychologists-archived', [PatientController::class, 'archived'])
+    ->name('psychologists.archived');
+
+Route::patch(
+    '/psychologists/{id}/restore',
+    [PsychologistController::class, 'restore']
+)->name('psychologists.restore');    
+
+Route::resource('psychologists', PsychologistController::class)
     ->middleware('auth');
 
 
