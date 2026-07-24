@@ -108,7 +108,7 @@ class PsychologistController extends Controller
 
         return redirect()
             ->route('psychologists.show', $psychologist)
-            ->with('success', 'Data pasien berhasil diperbarui.');
+            ->with('success', 'Data Psikolog berhasil diperbarui.');
     }
 
     public function destroy(Psychologist $psychologist)
@@ -122,11 +122,11 @@ class PsychologistController extends Controller
 
     // public function archived()
     // {
-    //     $patients = Patient::onlyTrashed()
+    //     $psychologists = Psychologist::onlyTrashed()
     //         ->orderBy('deleted_at', 'desc')
     //         ->paginate(20);
 
-    //     return view('patients.archived', compact('patients'));
+    //     return view('psychologists.archived', compact('psychologists'));
     // }
 
     public function archived(Request $request)
@@ -159,6 +159,6 @@ class PsychologistController extends Controller
 
         return redirect()
             ->route('psychologists.archived')
-            ->with('success', 'Pasien berhasil dipulihkan.');
+            ->with('success', 'Psikolog berhasil dipulihkan.');
     }
 }

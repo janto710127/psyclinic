@@ -81,7 +81,12 @@
                             Psikolog
 
                     </a>
-                                <a href="#" class="list-group-item list-group-item-action">
+                    <a href="{{ route('psychologists.archived') }}"
+                        class="list-group-item list-group-item-action">
+                        Arsip Psikolog
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action">
                         Appointment
                     </a>
 
