@@ -2,30 +2,24 @@
 
     <div class="container-fluid">
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="card shadow-sm">
 
-            <h4>
-                Tambah Psikolog
-            </h4>
-                    <a href="{{ route('psychologists.index') }}"
-                        class="btn btn-secondary">
+            {{-- Header --}}
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-                        Kembali
+                <h4 class="mb-0">
+                    Tambah Psikolog
+                </h4>
 
-                    </a>
+                <a href="{{ route('psychologists.index') }}"
+                   class="btn btn-secondary">
 
+                    <i class="bi bi-arrow-left"></i>
+                    Kembali
 
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-header">
-
-                Data Psikolog
+                </a>
 
             </div>
-
 
             <div class="card-body">
 
@@ -35,192 +29,281 @@
                     @csrf
 
 
-                    <div class="mb-3">
+                    {{-- ================= IDENTITAS ================= --}}
 
-                        <label class="form-label">
-                            Nama 
-                        </label>
+                    <div class="card mb-4">
 
-                        <input
-                            type="text"
-                            name="name"
-                            class="form-control"
-                            value="{{ old('name') }}"
-                            required
-                        >
+                        <div class="card-header bg-light">
 
-                        @error('name')
+                            <strong>Identitas</strong>
 
-                            <div class="text-danger">
-                                {{ $message }}
-                            </div>
+                        </div>
 
-                        @enderror
+                        <div class="card-body">
 
-                    </div>
+                            <div class="row">
 
+                                <div class="col-md-6 mb-3">
 
-                    <div class="mb-3">
+                                    <label class="form-label">
+                                        Nama Lengkap Psikolog
+                                    </label>
 
-                        <label class="form-label">
-                            Jenis Kelamin
-                        </label>
+                                    <input type="text"
+                                           name="name"
+                                           class="form-control"
+                                           value="{{ old('name') }}"
+                                           required>
 
-                        <select name="gender"
-                                class="form-select"
-                                required>
+                                    @error('name')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
 
-                            <option value="">
-                                -- Pilih --
-                            </option>
-
-                            <option value="L">
-                                Laki-laki
-                            </option>
-
-                            <option value="P">
-                                Perempuan
-                            </option>
-
-                        </select>
-
-                        @error('gender')
-
-                            <div class="text-danger">
-                                {{ $message }}
-                            </div>
-
-                        @enderror
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            No. HP
-                        </label>
-
-                        <input
-                            type="text"
-                            name="phone"
-                            class="form-control"
-                        >
-
-                    </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Email
-                        </label>
-
-                        <input type="email"
-                                name="email"
-                                class="form-control"
-                                value="{{ old('email') }}"
-                                placeholder="contoh: psikolog@psyclinic.id">
-
-                            @error('email')
-                                <div class="text-danger">
-                                    {{ $message }}
                                 </div>
-                            @enderror
-                    </div>
 
-                    <div class="mb-3">
+                                <div class="col-md-6 mb-3">
 
-                        <label class="form-label">
-                            No. SIP
-                        </label>
+                                    <label class="form-label">
+                                        Jenis Kelamin
+                                    </label>
 
-                        <input
-                            type="text"
-                            name="sip_number"
-                            class="form-control"
-                        >
+                                    <select name="gender"
+                                            class="form-select"
+                                            required>
 
-                    </div>
+                                        <option value="">-- Pilih --</option>
 
-                    <div class="mb-3">
+                                        <option value="L"
+                                            {{ old('gender')=='L' ? 'selected' : '' }}>
+                                            Laki-laki
+                                        </option>
 
-                        <label class="form-label">
-                            No. STR
-                        </label>
+                                        <option value="P"
+                                            {{ old('gender')=='P' ? 'selected' : '' }}>
+                                            Perempuan
+                                        </option>
 
-                        <input
-                            type="text"
-                            name="str_number"
-                            class="form-control"
-                        >
+                                    </select>
 
-                    </div>
-                    <div class="mb-3">
+                                </div>
 
-                        <label class="form-label">
-                            Spesialisasi
-                        </label>
-
-                        <input
-                            type="text"
-                            name="specialization"
-                            class="form-control"
-                        >
-
-                    </div>
-                   <div class="mb-3">
-
-                        <label class="form-label">
-                            Catatan
-                        </label>
-
-                        <textarea name="description"
-                                  class="form-control"
-                                  rows="5"
-                                  placeholder="Catatan "></textarea>
-                    </div>
-                    <div class="mb-3">
-
-                        <label for="is_active" class="form-label">
-                            Status
-                        </label>
-
-                        <select name="is_active"
-                                id="is_active"
-                                class="form-select">
-
-                            <option value="1" {{ old('is_active', 1) == 1 ? 'selected' : '' }}>
-                                Aktif
-                            </option>
-
-                            <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>
-                                Tidak Aktif
-                            </option>
-
-                        </select>
-
-                        @error('is_active')
-                            <div class="text-danger">
-                                {{ $message }}
                             </div>
-                        @enderror
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        No. HP
+                                    </label>
+
+                                    <input type="text"
+                                           name="phone"
+                                           class="form-control"
+                                           value="{{ old('phone') }}">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        Email
+                                    </label>
+
+                                    <input type="email"
+                                           name="email"
+                                           class="form-control"
+                                           value="{{ old('email') }}"
+                                           placeholder="contoh : psikolog@psyclinic.id">
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
 
-                    <button type="submit"
-                            class="btn btn-primary">
+                    {{-- ================= LEGALITAS ================= --}}
 
-                        Simpan Psikolog
+                    <div class="card mb-4">
 
-                    </button>
+                        <div class="card-header bg-light">
 
-                    <a href="{{ route('psychologists.index') }}"
-                        class="btn btn-secondary">
+                            <strong>Legalitas</strong>
 
-                        Batal
+                        </div>
 
-                    </a>
+                        <div class="card-body">
 
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        Nomor SIP
+                                    </label>
+
+                                    <input type="text"
+                                           name="sip_number"
+                                           class="form-control"
+                                           value="{{ old('sip_number') }}">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        Expired SIP
+                                    </label>
+
+                                    <input type="date"
+                                           name="sip_expired_at"
+                                           class="form-control"
+                                           value="{{ old('sip_expired_at') }}">
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        Nomor STR
+                                    </label>
+
+                                    <input type="text"
+                                           name="str_number"
+                                           class="form-control"
+                                           value="{{ old('str_number') }}">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        Expired STR
+                                    </label>
+
+                                    <input type="date"
+                                           name="str_expired_at"
+                                           class="form-control"
+                                           value="{{ old('str_expired_at') }}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- ================= PROFESIONAL ================= --}}
+
+                    <div class="card mb-4">
+
+                        <div class="card-header bg-light">
+
+                            <strong>Profesional</strong>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        Spesialisasi
+                                    </label>
+
+                                    <input type="text"
+                                           name="specialization"
+                                           class="form-control"
+                                           value="{{ old('specialization') }}">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="form-label">
+                                        Status
+                                    </label>
+
+                                    <select name="is_active"
+                                            class="form-select">
+
+                                        <option value="1"
+                                            {{ old('is_active',1)==1 ? 'selected' : '' }}>
+                                            Aktif
+                                        </option>
+
+                                        <option value="0"
+                                            {{ old('is_active')=='0' ? 'selected' : '' }}>
+                                            Tidak Aktif
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- ================= CATATAN ================= --}}
+
+                    <div class="card mb-4">
+
+                        <div class="card-header bg-light">
+
+                            <strong>Catatan</strong>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <textarea name="notes"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Catatan psikolog...">{{ old('notes') }}</textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- Tombol --}}
+
+                    <div class="text-end">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            <i class="bi bi-save"></i>
+                            Simpan
+
+                        </button>
+
+                        <a href="{{ route('psychologists.index') }}"
+                           class="btn btn-secondary">
+
+                            <i class="bi bi-x-circle"></i>
+                            Batal
+
+                        </a>
+
+                    </div>
 
                 </form>
 

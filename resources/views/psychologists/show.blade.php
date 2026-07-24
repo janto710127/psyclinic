@@ -1,163 +1,292 @@
 <x-app-layout>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Detail Psikolog
-        </h2>
-    </x-slot>
+    <div class="container-fluid">
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="card shadow-sm">
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            {{-- Header --}}
+            <div class="card-header">
+                <h4 class="mb-0">
+                    Profil Psikolog
+                </h4>
+            </div>
 
-                <div class="p-6 text-gray-900">
+            {{-- Body --}}
+            <div class="card-body">
 
-                    <div class="d-flex justify-content-between align-items-center mb-4">
+                {{-- Toolbar --}}
+                <div class="d-flex justify-content-end mb-4">
 
-                        <h4>Profil Pasien</h4>
-                        <a href="{{ route('patients.edit', $patient) }}"
-                        class="btn btn-warning">
-                            Edit Pasien
-                        </a>
-                        <form action="{{ route('patients.destroy', $patient) }}"
-                                    method="POST"
-                                    class="d-inline"
-                                    onsubmit="return confirm('Yakin ingin mengarsipkan pasien ini?')">
+                    <a href="{{ route('psychologists.edit', $psychologist) }}"
+                       class="btn btn-warning me-2">
+                        Edit
+                    </a>
 
-                                    @csrf
-                                    @method('DELETE')
+                    <form action="{{ route('psychologists.destroy', $psychologist) }}"
+                          method="POST"
+                          class="me-2"
+                          onsubmit="return confirm('Yakin ingin mengarsipkan psikolog ini?')">
 
-                                    <button type="submit"
-                                            class="btn btn-danger">
-                                        Arsipkan
-                                    </button>
+                        @csrf
+                        @method('DELETE')
 
-                        </form>
-                        <a href="{{ route('patients.index') }}"
-                        class="btn btn-secondary">
-                            Kembali
-                        </a>
-                    </div>
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Arsipkan
+                        </button>
 
-                    <div class="row mb-3">
-                        <div class="col-md-3 fw-bold">
-                            No. Pasien
-                        </div>
+                    </form>
 
-                        <div class="col-md-9">
-                            {{ $patient->patient_number }}
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-3 fw-bold">
-                            Nama
-                        </div>
-
-                        <div class="col-md-9">
-                            {{ $patient->name }}
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-3 fw-bold">
-                            Jenis Kelamin
-                        </div>
-
-                        <div class="col-md-9">
-                            {{ $patient->gender }}
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-3 fw-bold">
-                            No. HP
-                        </div>
-
-                        <div class="col-md-9">
-                            {{ $patient->phone ?? '-' }}
-                        </div>
-                    </div>
-
-                    <hr>
-
-<div class="d-flex justify-content-between align-items-center mt-4 mb-3">
-
-    <h4 class="mb-0">
-        Timeline Pasien
-    </h4>
-
-    <a href="{{ route('patients.timelines.create', $patient) }}"
-       class="btn btn-primary">
-
-        <i class="bi bi-plus-circle"></i>
-        Tambah Timeline
-
-    </a>
-
-</div>
-
-@if($patient->timelines->count())
-
-    <div class="list-group">
-
-        @foreach($patient->timelines->sortByDesc('occurred_at') as $timeline)
-
-            <div class="list-group-item">
-
-                <div class="d-flex justify-content-between">
-
-                    <h5 class="mb-1">
-                        {{ $timeline->title }}
-                    </h5>
-
-                    <small class="text-muted">
-
-                        {{ $timeline->occurred_at->format('d M Y H:i') }}
-
-                    </small>
+                    <a href="{{ route('psychologists.index') }}"
+                       class="btn btn-secondary">
+                        Kembali
+                    </a>
 
                 </div>
 
-                <p class="mb-1">
+                {{-- ================= IDENTITAS ================= --}}
 
-                    {{ $timeline->description ?? '-' }}
+                <div class="card mb-4">
 
-                </p>
+                    <div class="card-header bg-light">
+                        <strong>Identitas</strong>
+                    </div>
 
-                <small class="badge bg-secondary">
+                    <div class="card-body">
 
-                    {{ $timeline->type }}
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">
+                                Kode Psikolog
+                            </div>
+                            <div class="col-md-9">
+                                {{ $psychologist->psychologist_code }}
+                            </div>
+                        </div>
 
-                </small>
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">
+                                Nama
+                            </div>
+                            <div class="col-md-9">
+                                {{ $psychologist->name }}
+                            </div>
+                        </div>
 
-            </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">
+                                Jenis Kelamin
+                            </div>
+                            <div class="col-md-9">
+                                {{ $psychologist->gender }}
+                            </div>
+                        </div>
 
-        @endforeach
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">
+                                No. HP
+                            </div>
+                            <div class="col-md-9">
+                                {{ $psychologist->phone ?? '-' }}
+                            </div>
+                        </div>
 
-    </div>
+                        <div class="row">
+                            <div class="col-md-3 text-muted">
+                                Email
+                            </div>
+                            <div class="col-md-9">
+                                {{ $psychologist->email ?? '-' }}
+                            </div>
+                        </div>
 
-@else
+                    </div>
 
-    <div class="alert alert-info">
-
-        Belum ada timeline pasien.
-
-    </div>
-
-@endif
-
-
-
+                </div>
 
 
+                {{-- ================= LEGALIITAS ================= --}}
+
+                <div class="card mb-4">
+
+                    <div class="card-header bg-light">
+                        <strong>Legalitas</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">
+                                Nomor SIP
+                            </div>
+                            <div class="col-md-9">
+                                {{ $psychologist->sip_number ?? '-' }}
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">
+                                Expired SIP
+                            </div>
+                            <div class="col-md-9">
+
+                                {{ $psychologist->sip_expired_at?->format('d-m-Y') ?? '-' }}
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-muted">
+                                Nomor STR
+                            </div>
+                            <div class="col-md-9">
+                                {{ $psychologist->str_number ?? '-' }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 text-muted">
+                                Expired STR
+                            </div>
+                            <div class="col-md-9">
+
+                                {{ $psychologist->str_expired_at?->format('d-m-Y') ?? '-' }}
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {{-- ================= PROFESIONAL ================= --}}
+
+                <div class="card mb-4">
+
+                    <div class="card-header bg-light">
+                        <strong>Profesional</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-3 text-muted">
+                                Spesialisasi
+                            </div>
+
+                            <div class="col-md-9">
+                                {{ $psychologist->specialization ?? '-' }}
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3 text-muted">
+                                Status
+                            </div>
+
+                            <div class="col-md-9">
+
+                                @if($psychologist->is_active)
+
+                                    <span class="badge bg-success rounded-pill px-3 py-2">
+
+                                        Aktif
+
+                                    </span>
+
+                                @else
+
+                                    <span class="badge bg-secondary rounded-pill px-3 py-2">
+
+                                        Tidak Aktif
+
+                                    </span>
+
+                                @endif
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {{-- ================= CATATAN ================= --}}
+
+                <div class="card mb-4">
+
+                    <div class="card-header bg-light">
+
+                        <strong>Catatan</strong>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        {{ $psychologist->notes ?: '-' }}
+
+                    </div>
+
+                </div>
+
+
+                {{-- ================= INFORMASI SISTEM ================= --}}
+
+                <div class="card">
+
+                    <div class="card-header bg-light">
+
+                        <strong>Informasi Sistem</strong>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-3 text-muted">
+
+                                Dibuat
+
+                            </div>
+
+                            <div class="col-md-9">
+
+                                {{ $psychologist->created_at->format('d-m-Y H:i') }}
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3 text-muted">
+
+                                Terakhir Diubah
+
+                            </div>
+
+                            <div class="col-md-9">
+
+                                {{ $psychologist->updated_at->format('d-m-Y H:i') }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
 
         </div>
+
     </div>
 
 </x-app-layout>

@@ -2,92 +2,113 @@
 
     <div class="container-fluid">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
-            <h3 class="mb-0">
-                Daftar Psikolog
-            </h3>
-
-            <a href="{{ route('psychologists.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus"></i>
-                Tambah Psikolog
-            </a>
-        </div>
-
-
         <div class="card shadow-sm">
 
-            <div class="card-header">
+            {{-- Header --}}
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-                <h5 class="mb-0">
-                    Data Psikolog
-                </h5>
+                <h4 class="mb-0">
+                    Daftar Psikolog
+                </h4>
+
+                <a href="{{ route('psychologists.create') }}"
+                   class="btn btn-primary">
+
+                    <i class="bi bi-person-plus-fill"></i>
+                    Tambah Psikolog
+
+                </a>
 
             </div>
 
-
             <div class="card-body">
 
-                <form method="GET" action="{{ route('psychologists.index') }}" class="row g-2 mb-3">
+                {{-- Form Pencarian --}}
+                <form method="GET"
+                      action="{{ route('psychologists.index') }}"
+                      class="row g-2 mb-3">
 
                     <div class="col-md-8">
+
                         <input type="text"
-                            name="search"
-                            class="form-control"
-                            placeholder="Cari Kode Psikolog / Nama / HP"
-                            value="{{ $search }}">
+                               name="search"
+                               class="form-control"
+                               placeholder="Cari Kode Psikolog / Nama / No. HP"
+                               value="{{ $search }}">
+
                     </div>
 
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">
+
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+
+                            <i class="bi bi-search"></i>
                             Cari
+
                         </button>
+
                     </div>
 
                     <div class="col-md-2">
-                        <a href="{{ route('psychologists.index') }}" class="btn btn-secondary w-100">
+
+                        <a href="{{ route('psychologists.index') }}"
+                           class="btn btn-secondary w-100">
+
+                            <i class="bi bi-arrow-clockwise"></i>
                             Reset
+
                         </a>
+
                     </div>
 
                 </form>
 
+                {{-- Total Data --}}
+                <div class="mb-3 text-muted">
+
+                    Total Data :
+                    <strong>{{ $psychologists->total() }}</strong> Psikolog
+
+                </div>
+
                 <div class="table-responsive">
 
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-striped table-hover align-middle">
 
                         <thead class="table-light">
 
                             <tr>
 
-                                <th width="60">
+                                <th width="60" class="text-center">
                                     No
                                 </th>
 
-                                <th>
-                                    Kode Psikolog
+                                <th width="140">
+                                    Kode
                                 </th>
 
                                 <th>
-                                    Nama
+                                    Nama Psikolog
                                 </th>
-                                <th>
+
+                                <th width="140">
                                     Jenis Kelamin
                                 </th>
 
-                                <th>
-                                    SIP
+                                <th width="180">
+                                    No. SIP
                                 </th>
 
-                                <th>
+                                <th width="150">
                                     No. HP
                                 </th>
 
-                                <th>
+                                <th width="120" class="text-center">
                                     Status
                                 </th>
 
-                                <th width="180">
+                                <th width="120" class="text-center">
                                     Aksi
                                 </th>
 
@@ -95,41 +116,53 @@
 
                         </thead>
 
-
                         <tbody>
 
-                            @forelse ($psychologists as $psychologist)
+                            @forelse($psychologists as $psychologist)
 
                                 <tr>
 
-                                    <td>
-                                        {{ $loop->iteration }}
+                                    <td class="text-center">
+
+                                        {{ $psychologists->firstItem() + $loop->index }}
+
                                     </td>
 
                                     <td>
+
                                         {{ $psychologist->psychologist_code }}
+
                                     </td>
 
                                     <td>
+
                                         {{ $psychologist->name }}
+
                                     </td>
+
                                     <td>
+
                                         {{ $psychologist->gender }}
+
                                     </td>
 
                                     <td>
+
                                         {{ $psychologist->sip_number ?? '-' }}
+
                                     </td>
 
                                     <td>
+
                                         {{ $psychologist->phone ?? '-' }}
+
                                     </td>
 
-                                    <td>
+                                    <td class="text-center">
 
                                         @if($psychologist->is_active)
 
-                                            <span class="badge bg-success">
+                                            <span class="badge bg-success rounded-pill">
 
                                                 Aktif
 
@@ -137,7 +170,7 @@
 
                                         @else
 
-                                            <span class="badge bg-secondary">
+                                            <span class="badge bg-secondary rounded-pill">
 
                                                 Non Aktif
 
@@ -147,13 +180,23 @@
 
                                     </td>
 
-                                    <td>
+                                    <td class="text-center">
 
-                                        <a href="{{ route('psychologists.show', $psychologist) }}"
-                                        class="btn btn-sm btn-info">
-                                            Lihat
+                                        <a href="{{ route('psychologists.show',$psychologist) }}"
+                                           class="btn btn-sm btn-info">
+
+                                            <i class="bi bi-eye"></i>
+
                                         </a>
-                                   </td>
+
+                                        <a href="{{ route('psychologists.edit',$psychologist) }}"
+                                           class="btn btn-sm btn-warning">
+
+                                            <i class="bi bi-pencil-square"></i>
+
+                                        </a>
+
+                                    </td>
 
                                 </tr>
 
@@ -161,10 +204,10 @@
 
                                 <tr>
 
-                                    <td colspan="6"
-                                        class="text-center text-muted">
+                                    <td colspan="8"
+                                        class="text-center text-muted py-4">
 
-                                        Belum ada data Psikolog
+                                        Belum ada data Psikolog.
 
                                     </td>
 
@@ -175,12 +218,15 @@
                         </tbody>
 
                     </table>
- 
+
                 </div>
-               <div class="mt-3">
+
+                <div class="mt-3">
+
                     {{ $psychologists->links() }}
+
                 </div>
- 
+
             </div>
 
         </div>

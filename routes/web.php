@@ -42,7 +42,7 @@ Route::resource('patients', PatientController::class)
     ->middleware('auth');
 
 // Psikolog
-Route::get('/psychologists-archived', [PatientController::class, 'archived'])
+Route::get('/psychologists-archived', [PsychologistController::class, 'archived'])
     ->name('psychologists.archived');
 
 Route::patch(

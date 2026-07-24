@@ -81,47 +81,42 @@ class PsychologistController extends Controller
             ->with('success', 'Psikolog berhasil ditambahkan.');
     }
 
-    public function show(Patient $patient)
+    public function show(Psychologist $psychologist)
         {
-            $patient->load('timelines');
-
-            return view('patients.show', compact('patient'));
+            return view('psychologists.show', compact('psychologist'));
         }
-    public function edit(Patient $patient)
+    public function edit(Psychologist $psychologist)
     {
-        return view('patients.edit', compact('patient'));
+        return view('psychologists.edit', compact('psychologist'));
     }
 
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request, Psychologist $psychologist)
     {
         $request->validate([
-            'name' => 'required',
-            'gender' => 'required',
-            'birth_date' => 'nullable|date',
-            'phone' => 'nullable',
-            'email' => 'nullable|email',
-            'address' => 'nullable',
-            'occupation' => 'nullable',
-            'education' => 'nullable',
-            'marital_status' => 'nullable',
-            'emergency_contact_name' => 'nullable',
-            'emergency_contact_phone' => 'nullable',
-            'notes' => 'nullable',
+            'name'             => 'required|max:255',
+            'gender'           => 'required',
+            'phone'            => 'nullable|max:30',
+            'email'            => 'nullable|email',
+            'sip_number'       => 'nullable|max:100',
+            'str_number'       => 'nullable|max:100',
+            'specialization'   => 'nullable|max:255',
+            'notes'            => 'nullable',
+            'is_active'        => 'required|boolean',
         ]);
 
-        $patient->update($request->all());
+        $psychologist->update($request->all());
 
         return redirect()
-            ->route('patients.show', $patient)
+            ->route('psychologists.show', $psychologist)
             ->with('success', 'Data pasien berhasil diperbarui.');
     }
 
-    public function destroy(Patient $patient)
+    public function destroy(Psychologist $psychologist)
     {
-        $patient->delete();
+        $psychologist->delete();
 
         return redirect()
-            ->route('patients.index')
+            ->route('psychologists.index')
             ->with('success', 'Pasien berhasil diarsipkan.');
     }
 
@@ -136,13 +131,13 @@ class PsychologistController extends Controller
 
     public function archived(Request $request)
     {
-        $patients = Patient::onlyTrashed()
+        $psychologists = Psychologist::onlyTrashed()
 
             ->when($request->search, function ($query) use ($request) {
 
                 $query->where(function ($q) use ($request) {
 
-                    $q->where('patient_number', 'like', '%' . $request->search . '%')
+                    $q->where('psychologist_code', 'like', '%' . $request->search . '%')
                     ->orWhere('name', 'like', '%' . $request->search . '%')
                     ->orWhere('phone', 'like', '%' . $request->search . '%');
 
@@ -154,16 +149,16 @@ class PsychologistController extends Controller
             ->paginate(20)
             ->withQueryString();
 
-        return view('patients.archived', compact('patients'));
+        return view('psychologists.archived', compact('psychologists'));
     }
     public function restore($id)
     {
-        $patient = Patient::withTrashed()->findOrFail($id);
+        $psychologist = Psychologist::withTrashed()->findOrFail($id);
 
-        $patient->restore();
+        $psychologist->restore();
 
         return redirect()
-            ->route('patients.archived')
+            ->route('psychologists.archived')
             ->with('success', 'Pasien berhasil dipulihkan.');
     }
 }
