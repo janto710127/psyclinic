@@ -87,6 +87,10 @@
                     </a>
 
                     <a href="#" class="list-group-item list-group-item-action">
+                        Jadwal Praktek
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action">
                         Appointment
                     </a>
 

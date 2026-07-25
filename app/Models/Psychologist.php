@@ -26,4 +26,10 @@ class Psychologist extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function schedules()
+    {
+        return $this->hasMany(PsychologistSchedule::class);
+    }
+
 }

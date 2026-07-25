@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientTimelineController;
 use App\Http\Controllers\PsychologistController;
+use App\Http\Controllers\PsychologistScheduleController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,6 +55,9 @@ Route::patch(
 Route::resource('psychologists', PsychologistController::class)
     ->middleware('auth');
 
+// Skedule atau Jadwal Praktek
+Route::resource('psychologist_schedules', PsychologistScheduleController::class)
+    ->middleware('auth');
 
 require __DIR__.'/auth.php';
 
