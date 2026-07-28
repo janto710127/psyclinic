@@ -102,7 +102,7 @@
                                     </td>
 
                                     <td>
-                                        {{ $schedule->name }}
+                                        {{ $schedule->psychologist?->name ?? '-' }}                                        
                                     </td>
 
                                     <!-- ambil dari accessor di model psi_sche -->
@@ -111,7 +111,7 @@
                                     </td>
 
                                     <td>
-                                        {{ $schedule->shcedule }}
+                                        {{ $schedule->schedule }}
                                     </td>
 
                                     <td>
@@ -120,7 +120,7 @@
 
                                     <td class="text-center">
 
-                                        @if($psychologist->is_active)
+                                        @if($schedule->is_active)
 
                                             <span class="badge bg-success rounded-pill">
 
@@ -142,7 +142,7 @@
 
                                     <td>
 
-                                        <a href="{{ route('psychologist_schedules.show', $patient) }}"
+                                        <a href="{{ route('psychologist_schedules.show', $schedule) }}"
                                         class="btn btn-sm btn-info">
                                             Lihat
                                         </a>

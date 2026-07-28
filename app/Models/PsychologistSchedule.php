@@ -58,9 +58,8 @@ class PsychologistSchedule extends Model
 
     public function getScheduleAttribute()
     {
-        return substr($this->start_time,0,5).' - '.substr($this->end_time,0,5);
+        return $this->start_time->format('H:i').' - '.$this->end_time->format('H:i');
     }
-
     public function getDurationAttribute()
     {
         return $this->slot_duration.' Menit';

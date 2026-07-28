@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PsychologistSchedule;
+use App\Models\Psychologist;
 
 class PsychologistScheduleController extends Controller
 {
@@ -13,8 +14,15 @@ class PsychologistScheduleController extends Controller
      */
     public function create()
     {
-         return view('psychologist_schedules.create');
-    }    
+        $psychologists = Psychologist::where('is_active', 1)
+            ->orderBy('name')
+            ->get();
+
+        return view(
+            'psychologist_schedules.create',
+            compact('psychologists')
+        );
+    }  
   public function index(Request $request)
     {
         $search = $request->search;
@@ -50,26 +58,56 @@ class PsychologistScheduleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
-    {
-        //
-    }
+
+        {
+            $request->validate([
+                'psychologist_id' => 'required',
+                'day_of_week' => 'required',
+                'start_time' => 'nullable',
+                'end_time' => 'nullable',
+                'slot_duration' => 'nullable',
+                'is_active' => 'nullable',
+                'notes' => 'nullable',
+            ]);
+
+            PsychologistSchedule::create([
+                'psychologist_id' => $request->psychologist_id,
+                'day_of_week' => $request->day_of_week,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'slot_duration' => $request->slot_duration,
+                'is_active' => $request->is_active,
+                'notes' => $request->notes,
+            ]);
+
+            return redirect()
+                ->route('psychologist_schedules.index')
+                ->with('success', 'Jadwal Praktek berhasil ditambahkan.');
+        }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-         return view('psychologist_schedules.show');
-    }
+ public function show(PsychologistSchedule $psychologist_schedule)
+{
+    return view('psychologist_schedules.show', [
+        'schedule' => $psychologist_schedule,
+    ]);
+}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-         return view('psychologist_schedules.edit');
-    }
+public function edit(PsychologistSchedule $psychologist_schedule)
+{
+    $psychologists = Psychologist::where('is_active', 1)
+        ->orderBy('name')
+        ->get();
+
+    return view('psychologist_schedules.edit', [
+        'schedule' => $psychologist_schedule,
+        'psychologists' => $psychologists,
+    ]);
+}
 
     /**
      * Update the specified resource in storage.
