@@ -64,5 +64,15 @@ class PsychologistSchedule extends Model
     {
         return $this->slot_duration.' Menit';
     }
+
+    public function getStartTimeForInputAttribute()
+    {
+        return $this->start_time?->format('H:i');
+    }
+
+    public function getEndTimeForInputAttribute()
+    {
+        return $this->end_time?->format('H:i');
+    }
     
 }

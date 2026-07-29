@@ -58,6 +58,13 @@ Route::resource('psychologists', PsychologistController::class)
 // Skedule atau Jadwal Praktek
 Route::resource('psychologist_schedules', PsychologistScheduleController::class)
     ->middleware('auth');
+Route::get('/psychologist_schedules-archived', [PsychologistScheduleController::class, 'archived'])
+    ->name('psychologist_schedules.archived');
+Route::patch(
+    '/psychologist_schedules/{id}/restore',
+    [PsychologistScheduleController::class, 'restore']
+)->name('psychologist_schedules.restore');       
+
 
 require __DIR__.'/auth.php';
 

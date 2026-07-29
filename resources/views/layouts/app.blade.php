@@ -86,8 +86,14 @@
                         Arsip Psikolog
                     </a>
 
-                    <a href="#" class="list-group-item list-group-item-action">
-                        Jadwal Praktek
+                    <a href="{{ route('psychologist_schedules.index') }}"
+                        class="list-group-item list-group-item-action">
+                            Jadwal Praktek
+                    </a>
+
+                    <a href="{{ route('psychologist_schedules.archived') }}"
+                        class="list-group-item list-group-item-action">
+                            Arsip Jadwal Praktek
                     </a>
 
                     <a href="#" class="list-group-item list-group-item-action">
@@ -105,10 +111,41 @@
 
             <main class="col-md-10 p-4">
 
+                @if(session('success'))
+
+                    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+
+                        <i class="bi bi-check-circle-fill"></i>
+                        {{ session('success') }}
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert">
+                        </button>
+
+                    </div>
+
+                @endif
+
+                @if(session('error'))
+
+                    <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        {{ session('error') }}
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert">
+                        </button>
+
+                    </div>
+
+                @endif
+
                 {{ $slot }}
 
             </main>
-
         </div>
 
     </div>

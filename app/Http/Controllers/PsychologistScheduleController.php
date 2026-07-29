@@ -112,16 +112,73 @@ public function edit(PsychologistSchedule $psychologist_schedule)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, PsychologistSchedule $psychologist_schedule)
+
     {
-        //
+
+            $request->validate([
+                'day_of_week' => 'required',
+                'start_time' => 'nullable',
+                'end_time' => 'nullable',
+                'slot_duration' => 'nullable',
+                'is_active' => 'nullable',
+                'notes' => 'nullable',
+            ]);
+
+            $psychologist_schedule->update($request->all());
+
+                 return redirect()
+                ->route('psychologist_schedules.show',$psychologist_schedule)
+                ->with('success', 'Jadwal Praktek berhasil dirubah.');
+       
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(PsychologistSchedule $psychologist_schedule)
     {
-        //
+        $psychologist_schedule->delete();
+
+        return redirect()
+            ->route('psychologist_schedules.index')
+            ->with('success', 'Jadwal Praktek berhasil diarsipkan.');
+    }
+
+    public function archived(Request $request)
+    {
+        $search = $request->search;
+
+        $schedules = PsychologistSchedule::onlyTrashed()
+            ->with('psychologist')
+
+            ->when($search, function ($query) use ($search) {
+
+                $query->whereHas('psychologist', function ($q) use ($search) {
+
+                    $q->where('name', 'like', "%{$search}%");
+
+                });
+
+            })
+
+            ->orderBy('day_of_week')
+            ->orderBy('start_time')
+            ->paginate(10);
+
+        return view(
+            'psychologist_schedules.archived',
+            compact('schedules', 'search')
+        );
+    }
+   public function restore($id)
+    {
+        $schedule = PsychologistSchedule::withTrashed()->findOrFail($id);
+
+        $schedule->restore();
+
+        return redirect()
+            ->route('psychologist_schedules.archived')
+            ->with('success', 'Jadwal Praktek berhasil dipulihkan.');
     }
 }
