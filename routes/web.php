@@ -65,6 +65,16 @@ Route::patch(
     [PsychologistScheduleController::class, 'restore']
 )->name('psychologist_schedules.restore');       
 
+// Master Tarif
+Route::get('/service-rates/archived', [ServiceRateController::class, 'archived'])
+    ->name('service_rates.archived');
+
+Route::patch('/service-rates/{id}/restore', [ServiceRateController::class, 'restore'])
+    ->name('service_rates.restore');
+
+Route::resource('service_rates', ServiceRateController::class)
+    ->middleware('auth');
+
 
 require __DIR__.'/auth.php';
 
