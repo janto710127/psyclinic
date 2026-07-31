@@ -76,6 +76,5 @@ Route::patch('/service-rates/{id}/restore', [ServiceRateController::class, 'rest
 Route::resource('service_rates', ServiceRateController::class)
     ->middleware('auth');
 
-
 require __DIR__.'/auth.php';
 

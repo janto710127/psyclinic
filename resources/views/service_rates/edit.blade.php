@@ -75,7 +75,7 @@
                                 @foreach($timelineTypes as $timelineType)
 
                                     <option value="{{ $timelineType->id }}"
-                                        {{ old('timeline_type_id') == $timelineType->id ? 'selected' : '' }}>
+                                        {{ old('timeline_type_id', $serviceRate->timeline_type_id) == $timelineType->id ? 'selected' : '' }}>
 
                                         {{ $timelineType->name }}
 
@@ -101,7 +101,7 @@
                             <input type="text"
                                    name="service_name"
                                    class="form-control"
-                                   value="{{ old('service_name') }}"
+                                   value="{{ old('service_name', $serviceRate->service_name) }}"
                                    required>
 
                         </div>
@@ -123,7 +123,7 @@
                                 @foreach($psychologists as $psychologist)
 
                                     <option value="{{ $psychologist->id }}"
-                                        {{ old('psychologist_id') == $psychologist->id ? 'selected' : '' }}>
+                                        {{ old('psychologist_id',$serviceRate->psychologist_id) == $psychologist->id ? 'selected' : '' }}>
 
                                         {{ $psychologist->name }}
 
@@ -149,12 +149,26 @@
                             <select name="duration"
                                     class="form-select">
 
-                                <option value="30">30 Menit</option>
-                                <option value="45">45 Menit</option>
-                                <option value="60" selected>60 Menit</option>
-                                <option value="90">90 Menit</option>
-                                <option value="120">120 Menit</option>
-
+                                <option value="30"
+                                    {{ old('duration', $serviceRate->duration) == 30 ? 'selected' : '' }}>
+                                    30 Menit
+                                </option>
+                                <option value="45"
+                                    {{ old('duration', $serviceRate->duration) == 45 ? 'selected' : '' }}>
+                                    45 Menit
+                                </option>
+                                <option value="60"
+                                    {{ old('duration', $serviceRate->duration) == 60 ? 'selected' : '' }}>
+                                    60 Menit
+                                </option>
+                                <option value="90"
+                                    {{ old('duration', $serviceRate->duration) == 90 ? 'selected' : '' }}>
+                                    90 Menit
+                                </option>
+                                <option value="120"
+                                    {{ old('duration', $serviceRate->duration) == 120 ? 'selected' : '' }}>
+                                    120 Menit
+                                </option>
                             </select>
 
                         </div>
@@ -169,7 +183,7 @@
                             <input type="number"
                                    name="price"
                                    class="form-control"
-                                   value="{{ old('price') }}"
+                                   value="{{ old('price',$serviceRate->price) }}"
                                    min="0"
                                    required>
 
@@ -188,12 +202,13 @@
 
                             <select name="is_active"
                                     class="form-select">
-
-                                <option value="1" selected>
+                                <option value="1" 
+                                {{ old('is_active', $serviceRate->is_active) == 1 ? 'selected' : '' }}>
                                     Aktif
                                 </option>
 
-                                <option value="0">
+                                <option value="0" 
+                                {{ old('is_active', $serviceRate->is_active) == 0 ? 'selected' : '' }}>
                                     Tidak Aktif
                                 </option>
 
@@ -212,7 +227,7 @@
 
                         <textarea name="notes"
                                   rows="4"
-                                  class="form-control">{{ old('notes') }}</textarea>
+                                  class="form-control">{{ old('notes',$serviceRate->notes) }}</textarea>
 
                     </div>
 
@@ -220,9 +235,7 @@
 
                     <button type="submit"
                             class="btn btn-primary">
-
                         Update Tarif
-
                     </button>
 
                     <a href="{{ route('service_rates.show',$serviceRate) }}"

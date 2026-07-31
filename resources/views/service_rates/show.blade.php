@@ -8,43 +8,88 @@
 
     <div class="container-fluid">
 
-        <div class="card">
+        <div class="card shadow-sm">
 
             <div class="card-header d-flex justify-content-between align-items-center">
 
-                <h3 class="card-title">
-                    Informasi Tarif Layanan
-                </h3>
-
                 <div>
+                    <h4 class="mb-0">
+                        Detail Tarif Layanan
+                    </h4>
 
-                    <a href="{{ route('service_rates.edit', $serviceRate) }}"
-                       class="btn btn-warning btn-sm">
-                        Edit
-                    </a>
+                    <small class="text-muted">
+                        Informasi lengkap tarif layanan
+                    </small>
 
-                    <form action="{{ route('service_rates.destroy', $serviceRate) }}"
-                          method="POST"
-                          class="d-inline">
+                </div>
 
-                        @csrf
-                        @method('DELETE')
+                <div class="d-flex gap-2">
 
-                        <button class="btn btn-danger btn-sm"
-                                onclick="return confirm('Arsipkan tarif ini?')">
-                            Arsipkan
-                        </button>
+                    @if($serviceRate->trashed())
 
-                    </form>
+                        <form action="{{ route('service_rates.restore', $serviceRate->id) }}"
+                              method="POST"
+                              class="d-inline">
 
-                    <a href="{{ route('service_rates.index') }}"
-                       class="btn btn-secondary btn-sm">
-                        Kembali
-                    </a>
+                            @csrf
+                            @method('PATCH')
+
+                            <button type="submit"
+                                    class="btn btn-success btn-sm"
+                                    onclick="return confirm('Pulihkan tarif ini?')">
+
+                                Restore
+
+                            </button>
+
+                        </form>
+
+                        <a href="{{ route('service_rates.archived') }}"
+                           class="btn btn-secondary btn-sm">
+
+                            Kembali
+
+                        </a>
+
+                    @else
+
+                        <a href="{{ route('service_rates.edit', $serviceRate) }}"
+                           class="btn btn-warning btn-sm">
+
+                            Edit
+
+                        </a>
+
+                        <form action="{{ route('service_rates.destroy', $serviceRate) }}"
+                              method="POST"
+                              class="d-inline">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Arsipkan tarif ini?')">
+
+                                Arsipkan
+
+                            </button>
+
+                        </form>
+
+                        <a href="{{ route('service_rates.index') }}"
+                           class="btn btn-secondary btn-sm">
+
+                            Kembali
+
+                        </a>
+
+                    @endif
 
                 </div>
 
             </div>
+
 
             <div class="card-body">
 

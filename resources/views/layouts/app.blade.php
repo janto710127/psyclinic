@@ -99,6 +99,11 @@
                         class="list-group-item list-group-item-action">
                             Tarif Layanan
                     </a>
+                    <a href="{{ route('service_rates.archived') }}"
+                        class="list-group-item list-group-item-action">
+                            Arsip Tarif Layanan
+                    </a>
+
                     <a href="#" class="list-group-item list-group-item-action">
                         Appointment
                     </a>

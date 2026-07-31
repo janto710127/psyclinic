@@ -110,8 +110,23 @@ public function index(Request $request)
     /**
      * Display the specified resource.
      */
-    public function show(ServiceRate $serviceRate)
+    // public function show(ServiceRate $serviceRate)
+    // {
+    //     return view(
+    //         'service_rates.show',
+    //         compact('serviceRate')
+    //     );
+    // }
+
+    public function show($id)
     {
+        $serviceRate = ServiceRate::withTrashed()
+            ->with([
+                'timelineType',
+                'psychologist'
+            ])
+            ->findOrFail($id);
+
         return view(
             'service_rates.show',
             compact('serviceRate')
@@ -145,7 +160,24 @@ public function index(Request $request)
     public function update(Request $request, ServiceRate $serviceRate)
     {
         //
+        $validated = $request->validate([
+            'timeline_type_id' => 'required',
+            'service_name' => 'required|max:150',
+            'duration' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'psychologist_id' => 'nullable',
+            'is_active' => 'nullable',
+            'notes' => 'nullable',
+        ]);
+
+        $serviceRate->update($request->all());
+
+        return redirect()
+            ->route('service_rates.show',$serviceRate)
+            ->with('success', 'Tarif layanan berhasil dirubah.');
+
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -153,5 +185,56 @@ public function index(Request $request)
     public function destroy(ServiceRate $serviceRate)
     {
         //
+        $serviceRate->delete();
+
+        return redirect()
+            ->route('service_rates.index')
+            ->with('success', 'Jadwal Praktek berhasil diarsipkan.');
     }
+
+
+    public function archived(Request $request)
+    {
+        $search = $request->search;
+
+        $serviceRates = ServiceRate::onlyTrashed()
+        ->with([
+                'timelineType',
+                'psychologist'
+            ])
+
+            ->when($search, function ($query) use ($search) {
+
+                $query->where(function ($q) use ($search) {
+
+                    $q->where('service_code', 'like', "%{$search}%")
+                    ->orWhere('service_name', 'like', "%{$search}%");
+
+                });
+
+            })
+
+            ->orderBy('service_code')
+
+            ->paginate(10);
+
+        return view(
+            'service_rates.archived',
+            compact(
+                'serviceRates',
+                'search'
+            )
+        );
+    }
+   public function restore($id)
+    {
+        $schedule = ServiceRate::withTrashed()->findOrFail($id);
+
+        $schedule->restore();
+
+        return redirect()
+            ->route('service_rates.archived')
+            ->with('success', 'Tarif berhasil dipulihkan.');
+    }
+
 }
