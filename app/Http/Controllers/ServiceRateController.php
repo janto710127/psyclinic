@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ServiceRate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\TimelineType;
+use App\Models\Psychologist;
 
 class ServiceRateController extends Controller
 {
@@ -69,7 +71,40 @@ public function index(Request $request)
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'timeline_type_id' => 'required',
+            'service_name' => 'required|max:150',
+            'duration' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'psychologist_id' => 'nullable',
+            'is_active' => 'nullable',
+            'notes' => 'nullable',
+        ]);
+
+        $last = ServiceRate::withTrashed()->latest('id')->first();
+
+        if ($last) {
+            $number = ((int) substr($last->service_code, 3)) + 1;
+        } else {
+            $number = 1;
+        }
+
+        $temp = 'SVR' . str_pad($number, 4, '0', STR_PAD_LEFT);
+
+        ServiceRate::create([
+            'service_code' => $temp,
+            'timeline_type_id' => $request->timeline_type_id,
+            'psychologist_id' => $request->psychologist_id,
+            'service_name' => $request->service_name,
+            'duration' => $request->duration,
+            'price' => $request->price,
+            'is_active' => $request->is_active,
+            'notes' => $request->notes,
+        ]);
+
+        return redirect()
+            ->route('service_rates.index')
+            ->with('success', 'Tarif layanan berhasil ditambahkan.');
     }
 
     /**
@@ -77,7 +112,10 @@ public function index(Request $request)
      */
     public function show(ServiceRate $serviceRate)
     {
-        //
+        return view(
+            'service_rates.show',
+            compact('serviceRate')
+        );
     }
 
     /**
@@ -86,6 +124,19 @@ public function index(Request $request)
     public function edit(ServiceRate $serviceRate)
     {
         //
+       $timelineTypes = TimelineType::orderBy('name')->get();
+
+        $psychologists = Psychologist::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        return view(
+            'service_rates.edit',
+            compact('serviceRate',
+                'timelineTypes',
+                'psychologists'
+            )
+        );
     }
 
     /**

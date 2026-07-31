@@ -6,6 +6,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientTimelineController;
 use App\Http\Controllers\PsychologistController;
 use App\Http\Controllers\PsychologistScheduleController;
+use App\Http\Controllers\ServiceRateController;
 
 
 Route::get('/', function () {
