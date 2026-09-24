@@ -81,10 +81,18 @@ class PsychologistController extends Controller
             ->with('success', 'Psikolog berhasil ditambahkan.');
     }
 
-    public function show(Psychologist $psychologist)
+    // public function show(Psychologist $psychologist)
+    //     {
+    //         return view('psychologists.show', compact('psychologist'));
+    //     }
+ 
+    public function show($id)
         {
+            $psychologist = Psychologist::withTrashed()
+            ->findOrFail($id);
             return view('psychologists.show', compact('psychologist'));
         }
+        
     public function edit(Psychologist $psychologist)
     {
         return view('psychologists.edit', compact('psychologist'));

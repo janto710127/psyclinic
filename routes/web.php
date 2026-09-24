@@ -7,6 +7,8 @@ use App\Http\Controllers\PatientTimelineController;
 use App\Http\Controllers\PsychologistController;
 use App\Http\Controllers\PsychologistScheduleController;
 use App\Http\Controllers\ServiceRateController;
+use App\Http\Controllers\ServicePackageController;
+
 
 
 Route::get('/', function () {
@@ -76,5 +78,12 @@ Route::patch('/service-rates/{id}/restore', [ServiceRateController::class, 'rest
 Route::resource('service_rates', ServiceRateController::class)
     ->middleware('auth');
 
+//Package    
+Route::resource('service_packages', ServicePackageController::class)
+    ->middleware('auth');
+
+
 require __DIR__.'/auth.php';
+
+
 

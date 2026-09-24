@@ -103,6 +103,10 @@
                         class="list-group-item list-group-item-action">
                             Arsip Tarif Layanan
                     </a>
+                    <a href="{{ route('service_packages.index') }}"
+                        class="list-group-item list-group-item-action">
+                            Paket Layanan
+                    </a>
 
                     <a href="#" class="list-group-item list-group-item-action">
                         Appointment
@@ -158,6 +162,7 @@
 
     </div>
 
+    @stack('scripts')
 </body>
 
 </html>

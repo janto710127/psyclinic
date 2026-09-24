@@ -66,7 +66,7 @@
                             <th>Jam Praktek</th>
                             <th>Durasi</th>
                             <th>Di Hapus</th>
-                            <th>Aksi</th>
+                            <th width="120" class="text-center">Aksi</th>
                         </tr>
 
                     </thead>
@@ -104,25 +104,36 @@
                                     {{ $schedule->deleted_at->format('d-m-Y H:i') }}
                                 </td>
 
-                                <td>
+                                <td class="text-center">
 
-                                    <form method="POST"
-                                        action="{{ route('psychologist_schedules.restore', $schedule->id) }}"
-                                        style="display:inline">
+                                        <div class="btn-group btn-group-sm">
 
-                                        @csrf
-                                        @method('PATCH')
+                                            <a href="{{ route('psychologist_schedules.show',$schedule->id) }}"
+                                               class="btn btn-info">
 
-                                        <button type="submit"
-                                                class="btn btn-success btn-sm"
-                                                onclick="return confirm('Pulihkan jadwal praktek ini?')">
+                                                Detail
+                                            </a>    
 
-                                            Restore
+                                        <form method="POST"
+                                            action="{{ route('psychologist_schedules.restore', $schedule->id) }}"
+                                            style="display:inline">
 
-                                        </button>
+                                            @csrf
+                                            @method('PATCH')
 
-                                    </form>
-                                </td>
+                                            <button type="submit"
+                                                    class="btn btn-success btn-sm"
+                                                    onclick="return confirm('Pulihkan jadwal ini?')">
+
+                                                Restore
+
+                                            </button>
+
+                                        </form>
+                                            
+                                        </div>
+                                        
+                                    </td>
 
                             </tr>
 

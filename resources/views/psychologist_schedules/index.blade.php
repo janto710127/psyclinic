@@ -1,182 +1,191 @@
 <x-app-layout>
 
     <div class="container-fluid">
-
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
-            <h3 class="mb-0">
-                Daftar Jadwal Psikolog
-            </h3>
-
-            <a href="{{ route('psychologist_schedules.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus"></i>
-                Tambah Jadwal Psikolog
-            </a>
-        </div>
-
-
         <div class="card shadow-sm">
 
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-                <h5 class="mb-0">
-                    Data Jadwal Psikolog
-                </h5>
+                <div>
+                    <h3 class="mb-0">
+                        Daftar Jadwal Psikolog
+                    </h3>
+                    <small class="text-muted">
+                        Kelola jadwal praktek psikolog
+                    </small>
+
+                </div>
+                <a href="{{ route('psychologist_schedules.create') }}" class="btn btn-primary">
+                    <i class="bi bi-plus"></i>
+                     Tambah Jadwal Psikolog
+                </a>
 
             </div>
-
 
             <div class="card-body">
 
-                <form method="GET" action="{{ route('psychologist_schedules.index') }}" class="row g-2 mb-3">
+                    <form method="GET" action="{{ route('psychologist_schedules.index') }}" class="row g-2 mb-3">
 
-                    <div class="col-md-8">
-                        <input type="text"
-                            name="search"
-                            class="form-control"
-                            placeholder="Cari Nama"
-                            value="{{ $search }}">
-                    </div>
+                        <div class="col-md-8">
+                            <input type="text"
+                                name="search"
+                                class="form-control"
+                                placeholder="Cari Nama"
+                                value="{{ $search }}">
+                        </div>
 
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">
-                            Cari
-                        </button>
-                    </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                Cari
+                            </button>
+                        </div>
 
-                    <div class="col-md-2">
-                        <a href="{{ route('psychologist_schedules.index') }}" class="btn btn-secondary w-100">
-                            Reset
-                        </a>
-                    </div>
+                        <div class="col-md-2">
+                            <a href="{{ route('psychologist_schedules.index') }}" class="btn btn-secondary w-100">
+                                Reset
+                            </a>
+                        </div>
 
-                </form>
+                    </form>
 
-                <div class="table-responsive">
+                    <div class="table-responsive">
 
-                    <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover">
 
-                        <thead class="table-light">
-
-                            <tr>
-
-                                <th width="60">
-                                    No
-                                </th>
-
-                                <th>
-                                    Psikolog
-                                </th>
-
-                                <th>
-                                    Hari 
-                                </th>
-
-                                <th>
-                                    Jam Praktek
-                                </th>
-
-                                <th>
-                                    Durasi
-                                </th>
-                                <th>
-                                    Status
-                                </th>
-                                <th width="150">
-                                    Aksi
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            @forelse ($schedules as $schedule)
+                            <thead class="table-light">
 
                                 <tr>
 
-                                    <td>
-                                        {{ $loop->iteration }}
-                                    </td>
+                                    <th width="60">
+                                        No
+                                    </th>
 
-                                    <td>
-                                        {{ $schedule->psychologist?->name ?? '-' }}                                        
-                                    </td>
+                                    <th>
+                                        Psikolog
+                                    </th>
 
-                                    <!-- ambil dari accessor di model psi_sche -->
-                                    <td>
-                                        {{ $schedule->dayname }}
-                                    </td>
+                                    <th>
+                                        Hari 
+                                    </th>
 
-                                    <td>
-                                        {{ $schedule->schedule }}
-                                    </td>
+                                    <th>
+                                        Jam Praktek
+                                    </th>
 
-                                    <td>
-                                        {{ $schedule->duration }}
-                                    </td>
-
-                                    <td class="text-center">
-
-                                        @if($schedule->is_active)
-
-                                            <span class="badge bg-success rounded-pill">
-
-                                                Aktif
-
-                                            </span>
-
-                                        @else
-
-                                            <span class="badge bg-secondary rounded-pill">
-
-                                                Non Aktif
-
-                                            </span>
-
-                                        @endif
-
-                                    </td>
-
-                                    <td>
-
-                                        <a href="{{ route('psychologist_schedules.show', $schedule) }}"
-                                        class="btn btn-sm btn-info">
-                                            Lihat
-                                        </a>
-                                   </td>
+                                    <th>
+                                        Durasi
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th width="120" class="text-center">
+                                        Aksi
+                                    </th>
 
                                 </tr>
 
-                            @empty
+                            </thead>
 
-                                <tr>
 
-                                    <td colspan="6"
-                                        class="text-center text-muted">
+                            <tbody>
 
-                                        Belum ada data jadwal psikolog
+                                @forelse ($schedules as $schedule)
 
-                                    </td>
+                                    <tr>
 
-                                </tr>
+                                        <td>
+                                            {{ $loop->iteration }}
+                                        </td>
 
-                            @endforelse
+                                        <td>
+                                            {{ $schedule->psychologist?->name ?? '-' }}                                        
+                                        </td>
 
-                        </tbody>
+                                        <!-- ambil dari accessor di model psi_sche -->
+                                        <td>
+                                            {{ $schedule->dayname }}
+                                        </td>
 
-                    </table>
- 
+                                        <td>
+                                            {{ $schedule->schedule }}
+                                        </td>
+
+                                        <td>
+                                            {{ $schedule->duration }}
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            @if($schedule->is_active)
+
+                                                <span class="badge bg-success rounded-pill">
+
+                                                    Aktif
+
+                                                </span>
+
+                                            @else
+
+                                                <span class="badge bg-secondary rounded-pill">
+
+                                                    Non Aktif
+
+                                                </span>
+
+                                            @endif
+
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            <div class="btn-group btn-group-sm">
+
+                                                <a href="{{ route('psychologist_schedules.show',$schedule->id) }}"
+                                                class="btn btn-info">
+
+                                                    Detail
+
+                                                </a>
+
+                                                <a href="{{ route('psychologist_schedules.edit',$schedule) }}"
+                                                class="btn btn-warning">
+
+                                                    Edit
+
+                                                </a>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                @empty
+
+                                    <tr>
+
+                                        <td colspan="6"
+                                            class="text-center text-muted">
+
+                                            Belum ada data jadwal psikolog
+
+                                        </td>
+
+                                    </tr>
+
+                                @endforelse
+
+                            </tbody>
+
+                        </table>
+    
+                    </div>
+                <div class="mt-3">
+                        {{ $schedules->links() }}
+                    </div>
+    
                 </div>
-               <div class="mt-3">
-                    {{ $schedules->links() }}
-                </div>
- 
+
             </div>
-
-        </div>
 
     </div>
 

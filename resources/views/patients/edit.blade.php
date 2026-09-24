@@ -18,7 +18,7 @@
 
                         <h4>Edit Profil Pasien</h4>
 
-                        <a href="{{ route('patients.show', $patient) }}"
+                        <a href="{{ route('patients.index', $patient) }}"
                            class="btn btn-secondary">
 
                             Kembali

@@ -2,29 +2,33 @@
 
     <div class="container-fluid">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
-            <h3 class="mb-0">
-                Daftar Pasien
-            </h3>
-
-            <a href="{{ route('patients.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus"></i>
-                Tambah Pasien
-            </a>
-        </div>
-
-
         <div class="card shadow-sm">
 
-            <div class="card-header">
+        
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-                <h5 class="mb-0">
-                    Data Pasien
-                </h5>
+                <div>
 
+                    <h4 class="mb-0">
+                        Daftar Pasien
+                    </h4>
+
+                    <small class="text-muted">
+                        Kelola data pasien
+                    </small>
+                </div>
+                <!--ADD -->
+                <a href="{{ route('patients.create') }}"
+                   class="btn btn-primary">
+
+                    Tambah Tarif
+
+                </a>
+                 <!-- <a href="{{ route('patients.create') }}" class="btn btn-primary">
+                    <i class="bi bi-plus"></i>
+                    Tambah Pasien
+                </a> -->
             </div>
-
 
             <div class="card-body">
 
@@ -80,7 +84,7 @@
                                     No. HP
                                 </th>
 
-                                <th width="150">
+                                <th width="150" class="text-center">
                                     Aksi
                                 </th>
 
@@ -115,13 +119,27 @@
                                         {{ $patient->phone ?? '-' }}
                                     </td>
 
-                                    <td>
+                                    <td class="text-center">
+                                        
+                                        <div class="btn-group btn-group-sm">
 
-                                        <a href="{{ route('patients.show', $patient) }}"
-                                        class="btn btn-sm btn-info">
-                                            Lihat
-                                        </a>
+                                            <a href="{{ route('patients.show',$patient->id) }}"
+                                               class="btn btn-info">
+
+                                                Detail
+
+                                            </a>
+
+                                            <a href="{{ route('patients.edit',$patient) }}"
+                                               class="btn btn-warning">
+
+                                                Edit
+
+                                            </a>
+
+                                        </div>
                                    </td>
+                                 
 
                                 </tr>
 

@@ -8,17 +8,35 @@
 
     <div class="container-fluid">
 
-        <div class="card">
+        <div class="card shadow-sm">
 
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-                Data Pasien Diarsipkan
+                <div>
+
+                    <h4 class="mb-0">
+                        Arsip Data Pasien
+                    </h4>
+
+                    <small class="text-muted">
+                        Kelola data pasien yang telah diarsipkan
+                    </small>
+
+                </div>
+
+                <!--ADD -->
+                <a href="{{ route('service_rates.index') }}"
+                   class="btn btn-primary">
+
+                    Kembali
+
+                </a>
 
             </div>
 
             <div class="card-body">
 
-                                <form method="GET"
+                    <form method="GET"
                         action="{{ route('patients.archived') }}"
                         class="row mb-3">
 
@@ -63,11 +81,12 @@
                             <th>No</th>
                             <th>No Pasien</th>
                             <th>Nama</th>
-                            <th>Dihapus</th>
-                            <th>Aksi</th>
+                            <th width="150">Dihapus</th>
+                            <th width="120" class="text-center">Aksi</th>
                         </tr>
 
                     </thead>
+                
 
                     <tbody>
 
@@ -91,25 +110,35 @@
                                     {{ $patient->deleted_at->format('d-m-Y H:i') }}
                                 </td>
 
-                                <td>
+                                <td class="text-center">
 
-<form method="POST"
-      action="{{ route('patients.restore', $patient->id) }}"
-      style="display:inline">
+                                        <div class="btn-group btn-group-sm">
 
-    @csrf
-    @method('PATCH')
+                                            <a href="{{ route('patients.show',$patient->id) }}"
+                                               class="btn btn-info">
+                                                Detail
+                                            </a>    
 
-    <button type="submit"
-            class="btn btn-success btn-sm"
-            onclick="return confirm('Pulihkan pasien ini?')">
+                                        <form method="POST"
+                                            action="{{ route('patients.restore', $patient->id) }}"
+                                            style="display:inline">
 
-        Restore
+                                            @csrf
+                                            @method('PATCH')
 
-    </button>
+                                            <button type="submit"
+                                                    class="btn btn-success btn-sm"
+                                                    onclick="return confirm('Pulihkan pasien ini?')">
 
-</form>
-                                </td>
+                                                Restore
+
+                                            </button>
+
+                                        </form>
+                                            
+                                        </div>
+                                        
+                                    </td>
 
                             </tr>
 
@@ -136,14 +165,14 @@
 
                 <div class="mt-3">
 
-    <a href="{{ route('patients.index') }}"
-       class="btn btn-secondary">
+                    <a href="{{ route('patients.index') }}"
+                    class="btn btn-secondary">
 
-        Kembali ke Data Pasien
+                        Kembali ke Data Pasien
 
-    </a>
+                    </a>
 
-</div>
+                </div>
 
             </div>
 

@@ -18,31 +18,66 @@
 
                 <div class="d-flex gap-2">
 
-                    <a href="{{ route('psychologist_schedules.edit', $schedule) }}"
-                       class="btn btn-warning">
-                        <i class="bi bi-pencil-square"></i>
-                        Edit
-                    </a>
+                    @if($schedule->trashed())
 
-                    <form action="{{ route('psychologist_schedules.destroy', $schedule) }}"
-                          method="POST"
-                          onsubmit="return confirm('Yakin ingin mengarsipkan jadwal praktek ini?')">
+                        <form action="{{ route('psychologist_schedules.restore', $schedule->id) }}"
+                              method="POST"
+                              class="d-inline">
 
-                        @csrf
-                        @method('DELETE')
+                            @csrf
+                            @method('PATCH')
 
-                        <button class="btn btn-danger">
-                            <i class="bi bi-archive"></i>
-                            Arsipkan
-                        </button>
+                            <button type="submit"
+                                    class="btn btn-success btn-sm"
+                                    onclick="return confirm('Pulihkan jadwal ini?')">
 
-                    </form>
+                                Restore
 
-                    <a href="{{ route('psychologist_schedules.index') }}"
-                       class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i>
-                        Kembali
-                    </a>
+                            </button>
+
+                        </form>
+
+                        <a href="{{ route('psychologist_schedules.archived') }}"
+                           class="btn btn-secondary btn-sm">
+
+                            Kembali
+
+                        </a>
+
+                    @else
+
+                        <a href="{{ route('psychologist_schedules.edit', $schedule) }}"
+                           class="btn btn-warning btn-sm">
+
+                            Edit
+
+                        </a>
+
+                        <form action="{{ route('psychologist_schedules.destroy', $schedule) }}"
+                              method="POST"
+                              class="d-inline">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Arsipkan tarif ini?')">
+
+                                Arsipkan
+
+                            </button>
+
+                        </form>
+
+                        <a href="{{ route('psychologist_schedules.index') }}"
+                           class="btn btn-secondary btn-sm">
+
+                            Kembali
+
+                        </a>
+
+                    @endif
 
                 </div>
 

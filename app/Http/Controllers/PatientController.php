@@ -71,12 +71,44 @@ class PatientController extends Controller
                 ->with('success', 'Pasien berhasil ditambahkan.');
         }
 
-    public function show(Patient $patient)
-        {
-            $patient->load('timelines');
+    // public function show(Patient $patient)
+    //     {
+    //         $patient->load('timelines');
 
-            return view('patients.show', compact('patient'));
-        }
+    //         return view('patients.show', compact('patient'));
+    //     }
+
+public function show($id)
+{
+    $patient = Patient::withTrashed()
+        ->with([
+            'timelines'
+        ])
+        ->findOrFail($id);
+
+    return view(
+        'patients.show',
+        compact('patient')
+    );
+}
+
+        
+// public function show($id)
+//     {
+//         $serviceRate = ServiceRate::withTrashed()
+//             ->with([
+//                 'timelineType',
+//                 'psychologist'
+//             ])
+//             ->findOrFail($id);
+
+//         return view(
+//             'service_rates.show',
+//             compact('serviceRate')
+//         );
+//     }
+
+
     public function edit(Patient $patient)
     {
         return view('patients.edit', compact('patient'));

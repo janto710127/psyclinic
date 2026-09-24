@@ -90,12 +90,19 @@ class PsychologistScheduleController extends Controller
     /**
      * Display the specified resource.
      */
- public function show(PsychologistSchedule $psychologist_schedule)
+//  public function show(PsychologistSchedule $psychologist_schedule)
+// {
+//     return view('psychologist_schedules.show', [
+//         'schedule' => $psychologist_schedule,
+//     ]);
+// }
+ public function show($id)
 {
-    return view('psychologist_schedules.show', [
-        'schedule' => $psychologist_schedule,
-    ]);
+    $schedule = PsychologistSchedule::withTrashed()
+            ->findOrFail($id);
+    return view('psychologist_schedules.show',compact('schedule'));
 }
+
 
 public function edit(PsychologistSchedule $psychologist_schedule)
 {

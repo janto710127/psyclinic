@@ -2,23 +2,28 @@
 
     <div class="container-fluid">
 
-        <div class="card shadow-sm">
+        <div class="d-flex justify-content-between align-items-center mb-3">
 
-            {{-- Header --}}
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
 
                 <h4 class="mb-0">
                     Edit Psikolog
                 </h4>
 
-                <a href="{{ route('psychologists.show', $psychologist) }}"
-                class="btn btn-secondary">
+                <small class="text-muted">
+                    Update data psikolog.
+                </small>
 
-                    <i class="bi bi-arrow-left"></i>
-                    Kembali
-
-                </a>
             </div>
+
+            <a href="{{ route('psychologists.index',$psychologist) }}"
+               class="btn btn-secondary">
+
+                Kembali
+
+            </a>
+
+        </div>
 
             <div class="card-body">
 

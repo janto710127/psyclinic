@@ -4,46 +4,91 @@
 
         <div class="card shadow-sm">
 
-            {{-- Header --}}
-            <div class="card-header">
-                <h4 class="mb-0">
-                    Profil Psikolog
-                </h4>
-            </div>
+            
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-            {{-- Body --}}
-            <div class="card-body">
+                <div>
+                    <h4 class="mb-0">
+                        Detail Psikolog
+                    </h4>
 
-                {{-- Toolbar --}}
-                <div class="d-flex justify-content-end mb-4">
-
-                    <a href="{{ route('psychologists.edit', $psychologist) }}"
-                       class="btn btn-warning me-2">
-                        Edit
-                    </a>
-
-                    <form action="{{ route('psychologists.destroy', $psychologist) }}"
-                          method="POST"
-                          class="me-2"
-                          onsubmit="return confirm('Yakin ingin mengarsipkan psikolog ini?')">
-
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="submit"
-                                class="btn btn-danger">
-                            Arsipkan
-                        </button>
-
-                    </form>
-
-                    <a href="{{ route('psychologists.index') }}"
-                       class="btn btn-secondary">
-                        Kembali
-                    </a>
+                    <small class="text-muted">
+                        Informasi lengkap data psikolog
+                    </small>
 
                 </div>
 
+                <div class="d-flex gap-2">
+
+                    @if($psychologist->trashed())
+
+                        <form action="{{ route('psychologists.restore', $psychologist->id) }}"
+                              method="POST"
+                              class="d-inline">
+
+                            @csrf
+                            @method('PATCH')
+
+                            <button type="submit"
+                                    class="btn btn-success btn-sm"
+                                    onclick="return confirm('Pulihkan psikolog ini?')">
+
+                                Restore
+
+                            </button>
+
+                        </form>
+
+                        <a href="{{ route('psychologists.archived') }}"
+                           class="btn btn-secondary btn-sm">
+
+                            Kembali
+
+                        </a>
+
+                    @else
+
+                        <a href="{{ route('psychologists.edit', $psychologist) }}"
+                           class="btn btn-warning btn-sm">
+
+                            Edit
+
+                        </a>
+
+                        <form action="{{ route('psychologists.destroy', $psychologist) }}"
+                              method="POST"
+                              class="d-inline">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Arsipkan psikolog ini?')">
+
+                                Arsipkan
+
+                            </button>
+
+                        </form>
+
+                        <a href="{{ route('psychologists.index') }}"
+                           class="btn btn-secondary btn-sm">
+
+                            Kembali
+
+                        </a>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+
+            {{-- Body --}}
+            <div class="card-body">
+                
                 {{-- ================= IDENTITAS ================= --}}
 
                 <div class="card mb-4">

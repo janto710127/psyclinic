@@ -6,11 +6,14 @@
 
             {{-- Header --}}
             <div class="card-header d-flex justify-content-between align-items-center">
-
+                <div>
                 <h4 class="mb-0">
                     Daftar Psikolog
                 </h4>
-
+                <small class="text-muted">
+                        Kelola data psikolog
+                    </small>
+                </div>
                 <a href="{{ route('psychologists.create') }}"
                    class="btn btn-primary">
 
@@ -182,19 +185,23 @@
 
                                     <td class="text-center">
 
-                                        <a href="{{ route('psychologists.show',$psychologist) }}"
-                                           class="btn btn-sm btn-info">
+                                        <div class="btn-group btn-group-sm">
 
-                                            <i class="bi bi-eye"></i>
+                                            <a href="{{ route('psychologists.show',$psychologist) }}"
+                                               class="btn btn-info">
 
-                                        </a>
+                                                Detail
 
-                                        <a href="{{ route('psychologists.edit',$psychologist) }}"
-                                           class="btn btn-sm btn-warning">
+                                            </a>
 
-                                            <i class="bi bi-pencil-square"></i>
+                                            <a href="{{ route('psychologists.edit',$psychologist) }}"
+                                               class="btn btn-warning">
 
-                                        </a>
+                                                Edit
+
+                                            </a>
+
+                                        </div>
 
                                     </td>
 

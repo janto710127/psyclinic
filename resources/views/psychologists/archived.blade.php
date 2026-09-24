@@ -8,11 +8,29 @@
 
     <div class="container-fluid">
 
-        <div class="card">
+        <div class="card shadow-sm">
 
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-                Data Psikolog Diarsipkan
+                <div>
+
+                    <h4 class="mb-0">
+                        Arsip Data Psikolog
+                    </h4>
+
+                    <small class="text-muted">
+                        Kelola data psikolog yang telah diarsipkan
+                    </small>
+
+                </div>
+
+                <!--ADD -->
+                <a href="{{ route('psychologists.index') }}"
+                   class="btn btn-primary">
+
+                    Kembali
+
+                </a>
 
             </div>
 
@@ -63,8 +81,8 @@
                             <th>No</th>
                             <th>No Psikolog</th>
                             <th>Nama</th>
-                            <th>Dihapus</th>
-                            <th>Aksi</th>
+                            <th width="160">Dihapus</th>
+                            <th width="120" class="text-center">Aksi</th>
                         </tr>
 
                     </thead>
@@ -91,26 +109,36 @@
                                     {{ $psychologist->deleted_at->format('d-m-Y H:i') }}
                                 </td>
 
-                                <td>
+                                <td class="text-center">
 
-                                    <form method="POST"
-                                        action="{{ route('psychologists.restore', $psychologist->id) }}"
-                                        style="display:inline">
+                                        <div class="btn-group btn-group-sm">
 
-                                        @csrf
-                                        @method('PATCH')
+                                            <a href="{{ route('psychologists.show',$psychologist->id) }}"
+                                               class="btn btn-info">
 
-                                        <button type="submit"
-                                                class="btn btn-success btn-sm"
-                                                onclick="return confirm('Pulihkan psikolog ini?')">
+                                                Detail
+                                            </a>    
 
-                                            Restore
+                                        <form method="POST"
+                                            action="{{ route('psychologists.restore', $psychologist->id) }}"
+                                            style="display:inline">
 
-                                        </button>
+                                            @csrf
+                                            @method('PATCH')
 
-                                    </form>
-                                </td>
+                                            <button type="submit"
+                                                    class="btn btn-success btn-sm"
+                                                    onclick="return confirm('Pulihkan psikolog ini?')">
 
+                                                Restore
+
+                                            </button>
+
+                                        </form>
+                                            
+                                        </div>
+                                        
+                                    </td>
                             </tr>
 
                         @empty
