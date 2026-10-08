@@ -3,20 +3,38 @@
     <div class="container-fluid">
 
         {{-- Header --}}
+        
         <div class="d-flex justify-content-between align-items-center mb-3">
 
             <div>
-                <h4 class="mb-1">Service Package</h4>
+                <h4 class="mb-1">
+                    Service Package
+                </h4>
+
                 <small class="text-muted">
                     Daftar paket layanan psikologi
                 </small>
             </div>
 
-            <a href="{{ route('service_packages.create') }}"
-               class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                Tambah Package
-            </a>
+            <div>
+
+                <a href="{{ route('service_packages.archived') }}"
+                class="btn btn-secondary">
+
+                    <i class="fas fa-archive"></i>
+                    Arsip
+
+                </a>
+
+                <a href="{{ route('service_packages.create') }}"
+                class="btn btn-primary">
+
+                    <i class="fas fa-plus"></i>
+                    Tambah Package
+
+                </a>
+
+            </div>
 
         </div>
 
@@ -221,6 +239,19 @@
                                              <!-- Edit -->
 
                                         </a>
+
+                                        <form action="{{ route('service_packages.destroy', $package->id) }}"
+                                            method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm" title="Arsipkan"
+                                                    onclick="return confirm('Arsipkan paket {{ $package->package_name }} ini?')">
+                                                <i class="fas fa-archive"></i>
+                                            </button>
+                                        </form>
 
                                     </td>
 

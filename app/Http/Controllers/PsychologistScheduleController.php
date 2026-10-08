@@ -188,4 +188,43 @@ public function edit(PsychologistSchedule $psychologist_schedule)
             ->route('psychologist_schedules.archived')
             ->with('success', 'Jadwal Praktek berhasil dipulihkan.');
     }
+
+public function byPsychologist(Psychologist $psychologist)
+    {
+        $schedules = PsychologistSchedule::where(
+            'psychologist_id',
+            $psychologist->id
+        )
+            ->where('is_active', true)
+            ->orderBy('day_of_week')
+            ->orderBy('start_time')
+            ->get();
+
+        $dayNames = [
+            1 => 'Senin',
+            2 => 'Selasa',
+            3 => 'Rabu',
+            4 => 'Kamis',
+            5 => 'Jumat',
+            6 => 'Sabtu',
+            7 => 'Minggu',
+        ];
+
+        return response()->json(
+            $schedules->map(function ($schedule) use ($dayNames) {
+                return [
+                    'id' => $schedule->id,
+
+                    'day_name' => $dayNames[$schedule->day_of_week],
+
+                    'start_time' => $schedule->start_time?->format('H:i'),
+
+                    'end_time' => $schedule->end_time?->format('H:i'),
+
+                    'slot_duration' => $schedule->slot_duration,
+                ];
+            })->values()
+        );
+    }
+
 }

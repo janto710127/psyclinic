@@ -44,6 +44,11 @@ class ServicePackageDetail extends Model
         return $this->belongsTo(ServiceRate::class);
     }
 
+    public function usages()
+    {
+        return $this->hasMany(PatientPackageUsage::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Accessor

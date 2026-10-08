@@ -6,56 +6,58 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-
     public function up(): void
     {
         Schema::create('appointments', function (Blueprint $table) {
 
             $table->id();
 
-            // Nomor Appointment
-            $table->string('appointment_no')->unique();
+            // Nomor appointment
+            $table->string('appointment_no', 30)->unique();
 
-            // Pasien
+            // Branch
+            $table->foreignId('branch_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+
+            // Patient
             $table->foreignId('patient_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
 
-            // Psikolog
+            // Psychologist
             $table->foreignId('psychologist_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
 
-            // Jadwal Praktik
+            // Psychologist Schedule
             $table->foreignId('psychologist_schedule_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
 
-            // Tarif
+            // Service
             $table->foreignId('service_rate_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
 
-            // Tanggal Appointment
+            // Appointment date & time
             $table->date('appointment_date');
-
-            // Jam Appointment
             $table->time('appointment_time');
 
             // Status
-            $table->tinyInteger('status')->default(1);
+            $table->smallInteger('status')->default(1);
 
-            // Catatan
+            // Operational notes
             $table->text('notes')->nullable();
 
-            // User yang membuat
+            // User who created appointment
             $table->foreignId('created_by')
                 ->nullable()
                 ->constrained('users')
@@ -65,12 +67,25 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->timestamps();
+
+            // Index untuk pencarian/filter
+            $table->index([
+                'branch_id',
+                'appointment_date'
+            ]);
+
+            $table->index([
+                'psychologist_id',
+                'appointment_date'
+            ]);
+
+            $table->index([
+                'status',
+                'appointment_date'
+            ]);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('appointments');

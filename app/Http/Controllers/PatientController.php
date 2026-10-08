@@ -71,6 +71,33 @@ class PatientController extends Controller
                 ->with('success', 'Pasien berhasil ditambahkan.');
         }
 
+
+    public function search(Request $request)
+    {
+        $keyword = trim($request->get('q', ''));
+
+        if (strlen($keyword) < 2) {
+            return response()->json([]);
+        }
+
+        $patients = Patient::query()
+            ->where(function ($query) use ($keyword) {
+                $query->where('patient_number', 'like', "%{$keyword}%")
+                    ->orWhere('name', 'like', "%{$keyword}%")
+                    ->orWhere('phone', 'like', "%{$keyword}%");
+            })
+            ->orderBy('name')
+            ->limit(10)
+            ->get([
+                'id',
+                'patient_number',
+                'name',
+                'phone',
+            ]);
+
+        return response()->json($patients);
+    }
+        
     // public function show(Patient $patient)
     //     {
     //         $patient->load('timelines');
